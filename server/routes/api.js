@@ -6,50 +6,51 @@ var fs = require('fs'),
     getObject = require('../methods/methods.js'),
     time = require('../methods/time.js');
 
-var filePath = './resources/doorstatus.json';
+var dataPath = './resources/doorstatus.json';
+var settingsPath = './resources/settings.json';
 
 router.post('/', function(req, res) {
     var now = moment().format('YYYY-MM-DD HH:mm:ss');
 
-    jsonfile.readFile(filePath, function(err, obj) {
-        var lastObject = getObject.last(obj),
+    jsonfile.readFile(dataPath, function(err, data) {
+        var lastObject = getObject.last(data),
             newdata = {
                 time: now,
                 doorStatus: req.body.doorStatus || lastObject.doorStatus
             };
-        obj.push(newdata);
-        jsonfile.writeFileSync(filePath, obj);
+        data.push(newdata);
+        jsonfile.writeFileSync(dataPath, data);
         res.redirect('/');
     });
 });
 
 router.get('/status/leds', function(req, res) {
-    jsonfile.readFile(filePath, function(err, obj) {
-        var minutes = time.difference(obj),
-            doorStatus = getObject.last(obj).doorStatus,
-            leds = {
-                red: false,
-                orange: false,
-                green: false
-            };
-
-        if (minutes >= 5 && doorStatus === 1) {
-            leds.red = true;
-        } else if (minutes >= 2 && doorStatus === 1) {
-            leds.orange = true;
-        } else {
-            leds.green = true;
-        }
-        console.log(minutes);
-        res.send(JSON.stringify(leds));
+    jsonfile.readFile(dataPath, function(err, data) {
+        jsonfile.readFile(settingsPath, function(err, settings) {
+            var minutes = time.difference(data),
+                doorStatus = getObject.last(data).doorStatus,
+                leds = {
+                    red: false,
+                    orange: false,
+                    green: false
+                };
+            if (minutes >= JSON.parse(settings.warnings.first) && doorStatus === 1) {
+                leds.red = true;
+            } else if (minutes >= JSON.parse(settings.warnings.second) && doorStatus === 1) {
+                leds.orange = true;
+            } else {
+                leds.green = true;
+            }
+            res.send(JSON.stringify(leds));
+        });
     });
 });
 
 router.get('/status/alarm', function(req, res) {
-    jsonfile.readFile(filePath, function(err, obj) {
+    jsonfile.readFile(dataPath, function(err, data) {
 
-        var minutes = time.difference(obj);
-        var doorStatus = getObject.last(obj).doorStatus
+        var minutes = time.difference(data);
+        var doorStatus = getObject.last(data).doorStatus
         if (minutes >= 5 && doorStatus === 1) {
             res.send('{"alarm":"true"}');
         } else {
@@ -60,14 +61,14 @@ router.get('/status/alarm', function(req, res) {
 
 // router.get('/status/led/:led', function(req, res) {
 //     var led = req.params.led;
-//     jsonfile.readFile(filePath, function(err, obj) {
-//         res.send('{"led":"' + getObject.last(obj).leds[led] + '"}');
+//     jsonfile.readFile(dataPath, function(err, data) {
+//         res.send('{"led":"' + getObject.last(data).leds[led] + '"}');
 //     });
 // });
 
 router.get('/data/', function(req, res) {
-    jsonfile.readFile(filePath, function(err, obj) {
-        res.send(obj);
+    jsonfile.readFile(dataPath, function(err, data) {
+        res.send(data);
     });
 });
 
