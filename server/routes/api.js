@@ -7,7 +7,7 @@ var fs = require('fs'),
     time = require('../methods/time.js');
 
 var dataPath = './resources/doorstatus.json';
-var historyPath = './resources/doorstatus.json';
+var historyPath = './resources/history.json';
 var settingsPath = './resources/settings.json';
 
 router.post('/', function(req, res) {
@@ -47,8 +47,8 @@ router.get('/status/leds', function(req, res) {
                 } else {
                     newData.leds.green = true;
                 }
-                historyData.puch(newData);
-
+                historyData.push(newData);
+                jsonfile.writeFileSync(historyPath, historyData);
                 res.send(JSON.stringify(newData));
             });
         });
