@@ -1,8 +1,21 @@
-.doorstatus{
-  display: flex;
-  height: 10em;
+.doorstatus {
+    display: flex;
+    height: 10em;
 }
-.doorstatus section{
-  margin: auto;
-  text-align: center;
+.doorstatus section {
+    margin: auto;
+    text-align: center;
+}
+
+.warning {
+    background: #F44336;
+}
+.longopen {
+    background: #FF9800;
+}
+.open {
+    background: #2196F3;
+}
+.closed {
+    background: #4CAF50;
 }

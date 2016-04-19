@@ -7,27 +7,26 @@ var fs = require('fs'),
     time = require('../methods/time.js');
 
 var dataPath = './resources/doorstatus.json';
-var settingsPath = './resources/settings.json';
+var historyPath = './resources/history.json';
 
 router.get('/', function(req, res, next) {
-    jsonfile.readFile(dataPath, function(err, obj) {
-        if (obj != undefined || obj != null) {
-            res.render('home', {
-                title: 'Home',
-                description: 'A stop behind closing the door',
-                door: JSON.parse(getObject.last(obj).doorStatus),
-                timeAgo: moment(getObject.last(obj).time).fromNow(),
-                data: {
-                    red: true,
-                    orange: false,
-                    green: false
-                }
-            });
+    jsonfile.readFile(dataPath, function(err, data) {
+        jsonfile.readFile(historyPath, function(err, historyData) {
+            if (data != undefined || data != null) {
+                res.render('home', {
+                    title: 'Home',
+                    description: 'A stop behind closing the door',
+                    door: JSON.parse(getObject.last(data).doorStatus),
+                    timeAgo: moment(getObject.last(data).time).fromNow(),
+                    data: getObject.last(historyData).leds,
+                    status: getObject.last(historyData).status
+                });
 
-        } else if (err) {
-            res.status(404);
-            next();
-        }
+            } else if (err) {
+                res.status(404);
+                next();
+            }
+        });
     });
 });
 

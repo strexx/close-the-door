@@ -31,9 +31,11 @@ router.get('/status/leds', function(req, res) {
             jsonfile.readFile(settingsPath, function(err, settings) {
                 var now = moment().format('YYYY-MM-DD HH:mm:ss');
                 var minutes = time.difference(data),
-                    doorStatus = getObject.last(data).doorStatus,
+                    doorStatus = JSON.parse(getObject.last(data).doorStatus),
                     newData = {
                         time: now,
+                        doorStatus: doorStatus,
+                        status: "",
                         leds: {
                             red: false,
                             orange: false,
@@ -41,14 +43,24 @@ router.get('/status/leds', function(req, res) {
                         }
                     };
                 if (minutes >= JSON.parse(settings.warnings.first) && doorStatus === 1) {
+                    newData.status = "warning";
                     newData.leds.red = true;
                 } else if (minutes >= JSON.parse(settings.warnings.second) && doorStatus === 1) {
+                    newData.status = "longopen";
+                    newData.leds.orange = true;
+                } else if (minutes >= 0 && doorStatus === 1) {
+                    newData.status = "open";
                     newData.leds.orange = true;
                 } else {
+                    newData.status = "closed";
                     newData.leds.green = true;
                 }
-                historyData.push(newData);
-                jsonfile.writeFileSync(historyPath, historyData);
+                if (getObject.last(historyData).doorStatus !== newData.doorStatus) {
+                    historyData.push(newData);
+                    jsonfile.writeFileSync(historyPath, historyData);
+
+                }
+
                 res.send(JSON.stringify(newData));
             });
         });

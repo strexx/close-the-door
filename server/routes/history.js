@@ -6,6 +6,8 @@ var fs = require('fs'),
     time = require('../methods/time.js');
 
 var dataPath = './resources/doorstatus.json';
+var historyPath = './resources/history.json';
+var settingsPath = './resources/settings.json';
 
 
 router.get('/', function(req, res, next) {

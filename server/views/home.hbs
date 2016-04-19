@@ -5,14 +5,22 @@
     </section>
 </section>
 
-<section class="doorstatus">
-  <section>
-    {{#if door}}
-        <h2>Your door is open!</h2>
-        <small>Opend {{timeAgo}}</small>
-    {{else}}
-        <h2>Your door is closed</h2>
-        <small>Closed {{timeAgo}}</small>
-    {{/if}}
-  </section>
+
+
+<section class="doorstatus {{status}}">
+    <section>
+        {{#if data.red}}
+            <h2>Warning your door is open!</h2>
+            <small>Opend {{timeAgo}}</small>
+        {{/if}}
+        {{#if data.orange}}
+            <h2>Your door is open</h2>
+            <small>Opend {{timeAgo}}</small>
+        {{/if}}
+        {{#if data.green}}
+            <h2>Your door is closed</h2>
+            <small>Closed {{timeAgo}}</small>
+
+        {{/if}}
+    </section>
 </section>
