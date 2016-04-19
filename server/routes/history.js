@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
         if (obj != undefined || obj != null) {
             res.render('history', {
                 title: 'History',
-                description: 'On this page you can see the status of the leds',
+                description: 'The history of the doors',
                 data: getObject.last(obj)
             });
 

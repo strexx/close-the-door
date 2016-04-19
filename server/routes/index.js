@@ -14,7 +14,7 @@ router.get('/', function(req, res, next) {
         if (obj != undefined || obj != null) {
             res.render('home', {
                 title: 'Home',
-                description: 'Een stop achter het sluiten van de deur',
+                description: 'A stop behind closing the door',
                 door: JSON.parse(getObject.last(obj).doorStatus),
                 timeAgo: moment(getObject.last(obj).time).fromNow(),
                 data: {
