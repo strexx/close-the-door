@@ -7,6 +7,7 @@ var fs = require('fs'),
     time = require('../methods/time.js');
 
 var dataPath = './resources/doorstatus.json';
+var historyPath = './resources/doorstatus.json';
 var settingsPath = './resources/settings.json';
 
 router.post('/', function(req, res) {
@@ -20,28 +21,36 @@ router.post('/', function(req, res) {
             };
         data.push(newdata);
         jsonfile.writeFileSync(dataPath, data);
-        res.redirect('/');
+        res.redirect('/history');
     });
 });
 
 router.get('/status/leds', function(req, res) {
     jsonfile.readFile(dataPath, function(err, data) {
-        jsonfile.readFile(settingsPath, function(err, settings) {
-            var minutes = time.difference(data),
-                doorStatus = getObject.last(data).doorStatus,
-                leds = {
-                    red: false,
-                    orange: false,
-                    green: false
-                };
-            if (minutes >= JSON.parse(settings.warnings.first) && doorStatus === 1) {
-                leds.red = true;
-            } else if (minutes >= JSON.parse(settings.warnings.second) && doorStatus === 1) {
-                leds.orange = true;
-            } else {
-                leds.green = true;
-            }
-            res.send(JSON.stringify(leds));
+        jsonfile.readFile(historyPath, function(err, historyData) {
+            jsonfile.readFile(settingsPath, function(err, settings) {
+                var now = moment().format('YYYY-MM-DD HH:mm:ss');
+                var minutes = time.difference(data),
+                    doorStatus = getObject.last(data).doorStatus,
+                    newData = {
+                        time: now,
+                        leds: {
+                            red: false,
+                            orange: false,
+                            green: false
+                        }
+                    };
+                if (minutes >= JSON.parse(settings.warnings.first) && doorStatus === 1) {
+                    newData.leds.red = true;
+                } else if (minutes >= JSON.parse(settings.warnings.second) && doorStatus === 1) {
+                    newData.leds.orange = true;
+                } else {
+                    newData.leds.green = true;
+                }
+                historyData.puch(newData);
+
+                res.send(JSON.stringify(newData));
+            });
         });
     });
 });
