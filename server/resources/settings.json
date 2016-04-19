@@ -1,0 +1,10 @@
+{
+  "warnings": {
+    "first": "5",
+    "second": "2"
+  },
+  "times": {
+    "start": 2,
+    "end": 5
+  }
+}

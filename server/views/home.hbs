@@ -1,0 +1,18 @@
+<section class="slider">
+    <section>
+        <h1>Close the door</h1>
+        <small>A stop behind closing the door</small>
+    </section>
+</section>
+
+<section class="doorstatus">
+  <section>
+    {{#if door}}
+        <h2>Your door is open!</h2>
+        <small>Opend {{timeAgo}}</small>
+    {{else}}
+        <h2>Your door is closed</h2>
+        <small>Closed {{timeAgo}}</small>
+    {{/if}}
+  </section>
+</section>

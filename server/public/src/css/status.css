@@ -1,0 +1,8 @@
+.doorstatus{
+  display: flex;
+  height: 10em;
+}
+.doorstatus section{
+  margin: auto;
+  text-align: center;
+}

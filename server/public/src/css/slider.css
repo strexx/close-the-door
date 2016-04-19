@@ -1,0 +1,20 @@
+.slider {
+    display: flex;
+    height: 60vh;
+    text-align: center;
+    background: #fff;
+    background: url(/img/background.jpeg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+.slider section {
+    margin: auto;
+    color: #fff;
+    text-align: center;
+    padding: 1em;
+}
+.slider h1 {
+    font-size: 4em;
+}

@@ -1,0 +1,23 @@
+header {
+    width: 100%;
+    position: sticky;
+}
+nav {
+    background: #78C278;
+    display: inline-block;
+    width: 100%;
+}
+nav > ul a:hover {
+    background: #639E63;
+}
+nav > ul > li > a:active {
+    background: #508950;
+}
+nav > ul > li > a {
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+    padding: 1em;
+    text-decoration: none;
+    color: #fff;
+    display: block;
+}
