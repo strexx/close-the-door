@@ -1,10 +1,1 @@
-{
-  "warnings": {
-    "first": "5",
-    "second": "2"
-  },
-  "times": {
-    "start": 2,
-    "end": 5
-  }
-}
+{"warnings":{"first":"0.5","second":"0.5"},"times":{"start":"","end":""}}
