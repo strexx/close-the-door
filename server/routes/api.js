@@ -7,15 +7,14 @@ var fs = require('fs'),
     time = require('../methods/time.js'),
     getStatus = require('../methods/getstatus.js');
 
-var dataPath = './resources/doorstatus.json';
+var doorstatusPath = './resources/doorstatus.json';
 var settingsPath = './resources/settings.json';
-
-console.log(getStatus);
+var dataPath = './resources/data.json';
 
 router.post('/', function(req, res) {
     var now = moment().format('YYYY-MM-DD HH:mm:ss');
 
-    jsonfile.readFile(dataPath, function(err, data) {
+    jsonfile.readFile(doorstatusPath, function(err, data) {
         var lastObject = getObject.last(data),
             newdata = {
                 time: now,
@@ -24,20 +23,27 @@ router.post('/', function(req, res) {
         if (getObject.last(data).doorStatus != req.body.doorStatus) {
             data.push(newdata);
         }
-        jsonfile.writeFileSync(dataPath, data);
+        jsonfile.writeFileSync(doorstatusPath, data);
     });
 });
 
 router.get('/status', function(req, res) {
     jsonfile.readFile(dataPath, function(err, data) {
-        jsonfile.readFile(settingsPath, function(err, settings) {
-            res.send(JSON.stringify(getStatus(data, settings)));
-        });
+        if (data.doorStatus === undefined) {
+            jsonfile.readFile(doorstatusPath, function(err, doorstatusdata) {
+                jsonfile.readFile(settingsPath, function(err, settings) {
+                    res.send(JSON.stringify(getStatus(doorstatusdata, settings)));
+                });
+            });
+        } else {
+            res.send(JSON.stringify(data));
+            jsonfile.writeFileSync(dataPath, '');
+        }
     });
 });
 
 // router.get('/status/alarm', function(req, res) {
-//     jsonfile.readFile(dataPath, function(err, data) {
+//     jsonfile.readFile(doorstatusPath, function(err, data) {
 //
 //         var minutes = time.difference(data);
 //         var doorStatus = getObject.last(data).doorStatus
@@ -50,7 +56,7 @@ router.get('/status', function(req, res) {
 // });
 
 router.get('/data/', function(req, res) {
-    jsonfile.readFile(dataPath, function(err, data) {
+    jsonfile.readFile(doorstatusPath, function(err, data) {
         res.send(data);
     });
 });

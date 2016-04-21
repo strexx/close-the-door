@@ -5,6 +5,8 @@ var fs = require('fs'),
     jsonfile = require('jsonfile'),
     getObject = require('../methods/methods.js');
 
+var dataPath = './resources/data.json';
+
 router.get('/', function(req, res, next) {
     res.render('status', {
         title: 'Status',
@@ -15,24 +17,20 @@ router.get('/', function(req, res, next) {
 
 router.post('/', function(req, res, next) {
     var body = req.body
-    jsonfile.readFile(historyPath, function(err, historyData) {
-        var now = moment().format('YYYY-MM-DD HH:mm:ss');
-        var doorStatus = getObject.last(historyData).doorStatus,
-            newData = {
-                time: now,
-                doorStatus: doorStatus,
-                status: "costum",
-                alarm: req.body.alarm,
-                redLed: req.body.redLed,
-                orangeLed: req.body.orangeLed,
-                greenLed: req.body.greenLed
-            };
-        if (getObject.last(historyData).leds !== newData.leds) {
-            historyData.push(newData);
-            jsonfile.writeFileSync(historyPath, historyData);
-        }
-        res.redirect('/status');
-    });
+    var now = moment().format('YYYY-MM-DD HH:mm:ss');
+    var newData = {
+        time: now,
+        doorStatus: 0,
+        status: "costum",
+        alarm: body.alarm,
+        redLed: body.redLed,
+        orangeLed: body.orangeLed,
+        greenLed: body.greenLed
+    };
+
+    jsonfile.writeFileSync(dataPath, newData);
+
+    res.redirect('/status');
 });
 
 module.exports = router;
