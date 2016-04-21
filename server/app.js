@@ -21,7 +21,7 @@ app.use(bodyParser.json());
 //define static path
 app.use(express.static(path.join(__dirname, 'public/dist')));
 
-//use routes
+//define routes
 app.use('/', routes);
 app.use('/api', api);
 app.use('/status', status);
@@ -45,7 +45,7 @@ app.use(function(err, req, res, next) {
     });
 });
 
-//start app
+//start app and lissen to poort 3010
 app.listen(3010, function() {
     console.log('listening on port 3010!');
 });

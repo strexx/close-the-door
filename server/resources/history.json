@@ -1,9 +1,0 @@
-[{
-    "time": "2016-04-21 08:29:20",
-    "doorStatus": 0,
-    "status": "closed",
-    "alarm": false,
-    "redLed": false,
-    "orangeLed": false,
-    "greenLed": false
-}]

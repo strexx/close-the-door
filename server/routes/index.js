@@ -4,14 +4,15 @@ var fs = require('fs'),
     jsonfile = require('jsonfile'),
     moment = require('moment'),
     getObject = require('../methods/methods.js'),
-    time = require('../methods/time.js');
+    time = require('../methods/time.js'),
+    getStatus = require('../methods/getstatus.js');
 
 var dataPath = './resources/doorstatus.json';
-var historyPath = './resources/history.json';
+var settingsPath = './resources/settings.json';
 
 router.get('/', function(req, res, next) {
     jsonfile.readFile(dataPath, function(err, data) {
-        jsonfile.readFile(historyPath, function(err, historyData) {
+        jsonfile.readFile(settingsPath, function(err, settings) {
             if (data != undefined || data != null) {
                 res.render('home', {
                     title: 'Home',
@@ -19,11 +20,11 @@ router.get('/', function(req, res, next) {
                     door: JSON.parse(getObject.last(data).doorStatus),
                     timeAgo: moment(getObject.last(data).time).fromNow(),
                     data: {
-                        red: getObject.last(historyData).redLed,
-                        orange: getObject.last(historyData).orangeLed,
-                        green: getObject.last(historyData).greenLed
+                        red: getStatus(data, settings).redLed,
+                        orange: getStatus(data, settings).orangeLed,
+                        green: getStatus(data, settings).greenLed
                     },
-                    status: getObject.last(historyData).status
+                    status: getStatus(data, settings).status
                 });
             } else if (err) {
                 res.status(404);
