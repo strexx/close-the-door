@@ -32,9 +32,12 @@ gulp.task('styles', function(cb) {
     return gulp.src([
             './public/src/css/reset.css',
             './public/src/css/base.css',
+            './public/src/css/fonts.css',
             './public/src/css/menu.css',
             './public/src/css/slider.css',
-            './public/src/css/status.css'
+            './public/src/css/status.css',
+            './public/src/css/forms.css',
+            './public/src/css/settings.css'
         ])
         .pipe(concat('style.css'))
         .pipe(postcss(processors))
