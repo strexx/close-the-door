@@ -7,6 +7,7 @@ var dataPath = './resources/doorstatus.json';
 var settingsPath = './resources/settings.json';
 
 router.get('/', function(req, res, next) {
+  //display settings page
     jsonfile.readFile(settingsPath, function(err, obj) {
         if (err) {
             res.status(404);
@@ -22,6 +23,7 @@ router.get('/', function(req, res, next) {
 });
 router.post('/', function(req, res, next) {
     var body = req.body
+    //set settings to page
     jsonfile.readFile(settingsPath, function(err, obj) {
         var settings = {
             "warnings": {
@@ -33,6 +35,7 @@ router.post('/', function(req, res, next) {
                 "end": body.endTime
             }
         };
+        //write data
         jsonfile.writeFileSync(settingsPath, settings);
         res.redirect('/settings');
     });
