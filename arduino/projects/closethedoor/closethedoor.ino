@@ -11,15 +11,19 @@ String getPath          = "/api/status";
 String postPath         = "/api";
 const int httpPort      = 80;
 
+//setup ledpins
 const int redLedPin     = D0;
 const int greenLedPin   = D1;
 const int orangeLedPin  = D2;
 
+//setup sensors and sound pin
 const int soundPin      = D3;
 const int sensorPin     = D4;
 
+//sensor value
 int sensorValue         = 0;
 
+//change WiFiClient to client var
 WiFiClient client;
 
 void setup() {
@@ -35,8 +39,7 @@ void setup() {
   pinMode(soundPin, OUTPUT);
   pinMode(sensorPin, INPUT);
 
-  delay(10);
-  Serial.print("Connecting to ");
+  Serial.println("Connecting to ");
   Serial.println(ssid);
 
   //start wifi
@@ -51,30 +54,36 @@ void setup() {
   Serial.println("IP address: " + WiFi.localIP());
 }
 
-// the loop function runs over and over again forever
+// the loop function
 void loop() {
+  //read the sensor
   sensorValue = digitalRead(sensorPin);
-  Serial.print(sensorValue);
+  //print the sensor value
+  Serial.println(sensorValue);
 
+  //if the connection is faild with the website
   if (!client.connect(host, httpPort)) {
     Serial.println("connection failed!!");
     return;
   }
 
-
+  //get the light status
   getNetworkData();
 
   delay(2000);
 
+  //post the data to the site
   sendNetworkData();
 }
 
-void reset(){
-    digitalWrite(redLedPin, LOW);
-    digitalWrite(orangeLedPin, LOW);
-    digitalWrite(greenLedPin, LOW);
+//reset all lights
+void reset() {
+  digitalWrite(redLedPin, LOW);
+  digitalWrite(orangeLedPin, LOW);
+  digitalWrite(greenLedPin, LOW);
 }
 
+//get request to the site
 void getNetworkData() {
   client.print(String("GET ") + getPath + " HTTP/1.1\r\n" +
                "Host: " + host + "\r\n" +
@@ -85,21 +94,23 @@ void getNetworkData() {
   // read response
   String section = "header";
   while (client.available()) {
+
+    //get every line form response if connection is open
     String line = client.readStringUntil('\r');
-    //    Serial.print(line);
-    // we’ll parse the HTML body here
+
+    // parse the json
     if (section == "header") { // headers..
-      //Serial.print(".");
-      if (line == "\n") { // skips the empty space at the beginning
+      if (line == "\n") { // skip the enter
         section = "json";
       }
     }
-    else if (section == "json") {  // if it' json
+    else if (section == "json") {  // if it's json data
       section = "ignore";
       String result = line.substring(1);
+
       // Parse JSON
       int size = result.length() + 1;
-      char json[size];
+      char json[size]; // get the json size
 
       result.toCharArray(json, size);
       StaticJsonBuffer<200> jsonBuffer;
@@ -110,42 +121,42 @@ void getNetworkData() {
         Serial.println("parseObject() failed");
         return;
       }
+      reset(); //reset the pins, if I don' do this all pins wil go on if the status changes
 
+      //turn on the alarm if the alarm is true
       if (strcmp(json_parsed["alarm"], "true") == 0) {
         digitalWrite(soundPin, HIGH);
       }
-       if (strcmp(json_parsed["alarm"], "false") == 0) {
+      //turn off the alarm if the alarm is false
+      if (strcmp(json_parsed["alarm"], "false") == 0) {
         digitalWrite(soundPin, LOW);
       }
-
-      // Make the decision to turn off or on the LED
+      //turn red led on if the redLed is true
       if (strcmp(json_parsed["redLed"], "true") == 0) {
-        reset();
         digitalWrite(redLedPin, HIGH);
-
       }
+       //turn orange led on if the orangeLed is true
       if (strcmp(json_parsed["orangeLed"], "true") == 0) {
-        reset();
         digitalWrite(orangeLedPin, HIGH);
-
       }
+       //turn green ornage on if the greenLed is true
       if (strcmp(json_parsed["greenLed"], "true") == 0) {
-        reset();
         digitalWrite(greenLedPin, HIGH);
-
       }
-
     }
   }
-  Serial.println("closing connection. ");
+  Serial.println(" closing connection. ");
 }
 
+// post to the server
 void sendNetworkData() {
 
+  //post to the server if
   if (client.connect(host, httpPort)) {
     String postStr = "doorStatus=";
     postStr += String(sensorValue);
 
+    //post headers
     client.println("POST /api HTTP/1.1");
     client.println("Host: " + String(host));
     client.println("Content-Type: application/x-www-form-urlencoded");
