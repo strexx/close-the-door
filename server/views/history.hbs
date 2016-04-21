@@ -1,12 +1,13 @@
-<h1>Vissualisation</h1>
+<section class="settings">
+    <div class="slider"></div>
 
-<form action="/api" method="post">
-    <label for="">doorStatus</label>
-    <select name="doorStatus">
-        <option value="1">Open</option>
-        <option value="0">Close</option>
-    </select>
-    <button type="submit">
-        Update
-    </button>
-</form>
+    <section class="shadow resposive">
+      <header>
+        <h1>History</h1>
+      <p>
+        This is a graph of the last 20 changes from the door.
+      </p>
+      </header>
+      <div id="chart"></div>
+    </section>
+</section>

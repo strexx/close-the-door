@@ -102,7 +102,7 @@ router.get('/status/alarm', function(req, res) {
 // });
 
 router.get('/data/', function(req, res) {
-    jsonfile.readFile(dataPath, function(err, data) {
+    jsonfile.readFile(historyPath, function(err, data) {
         res.send(data);
     });
 });
