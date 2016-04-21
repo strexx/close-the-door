@@ -4,9 +4,9 @@
         <small>A stop behind closing the door</small>
     </section>
 </section>
+
 <section class="doorstatus {{status}}">
     <section class="resposive">
-      {{data.green}}
         {{#if data.red}}
             <h2>Warning your door is open!</h2>
             <small>Opend {{timeAgo}}</small>
@@ -18,10 +18,10 @@
         {{#if data.green}}
             <h2>Your door is closed</h2>
             <small>Closed {{timeAgo}}</small>
-
         {{/if}}
     </section>
 </section>
+
 <section class="resposive">
   <header>
     <h1>History</h1>

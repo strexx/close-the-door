@@ -5,19 +5,11 @@ var fs = require('fs'),
     jsonfile = require('jsonfile'),
     getObject = require('../methods/methods.js');
 
-var historyPath = './resources/history.json';
-
 router.get('/', function(req, res, next) {
-    jsonfile.readFile(historyPath, function(err, obj) {
-        if (err) {
-            res.status(404);
-            next();
-        }
-        res.render('status', {
-            title: 'Status',
-            description: 'The status form the leds',
-            data: obj
-        });
+    res.render('status', {
+        title: 'Status',
+        description: 'The status form the leds'
+
     });
 });
 
@@ -35,9 +27,6 @@ router.post('/', function(req, res, next) {
                 orangeLed: req.body.orangeLed,
                 greenLed: req.body.greenLed
             };
-
-            console.log(getObject.last(historyData).doorStatus);
-
         if (getObject.last(historyData).leds !== newData.leds) {
             historyData.push(newData);
             jsonfile.writeFileSync(historyPath, historyData);
