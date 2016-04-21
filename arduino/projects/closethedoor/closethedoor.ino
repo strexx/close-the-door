@@ -1,20 +1,20 @@
 #include <ESP8266WiFi.h>
 #include <ArduinoJson.h>
 
-const char* ssid     = "SennyK";
-const char* password = "27031990!";
+//setup wifi
+const char* ssid     = "XXX";
+const char* password = "XXXX";
 
-const char* host        = "iot.dolstra.me";
-String getPath          = "/api/status/leds";
+//setup host
+const char* host        = "iot.dolstra.me"; // Your domain
+String getPath          = "/api/status";
 String postPath         = "/api";
 const int httpPort      = 80;
 
-//leds
 const int redLedPin     = D0;
 const int greenLedPin   = D1;
 const int orangeLedPin  = D2;
 
-//senors and sound
 const int soundPin      = D3;
 const int sensorPin     = D4;
 
@@ -23,27 +23,23 @@ int sensorValue         = 0;
 WiFiClient client;
 
 void setup() {
-  //set pins sensors
-  pinMode(sensorPin, INPUT);
+  //set serial
+  Serial.begin(9600);
 
   //setpint leds
   pinMode(redLedPin, OUTPUT);
   pinMode(greenLedPin, OUTPUT);
   pinMode(orangeLedPin, OUTPUT);
-  //sound pin
+
+  //set pins sensors
   pinMode(soundPin, OUTPUT);
+  pinMode(sensorPin, INPUT);
 
-  //set greenlight on for test
-  digitalWrite(greenLedPin, HIGH);
-
-  //set serial
-  Serial.begin(9600);
-
-  //set up wifi
   delay(10);
   Serial.print("Connecting to ");
   Serial.println(ssid);
 
+  //start wifi
   WiFi.begin(ssid, password);
   int wifi_ctr = 0;
   while (WiFi.status() != WL_CONNECTED) {
@@ -55,22 +51,29 @@ void setup() {
   Serial.println("IP address: " + WiFi.localIP());
 }
 
+// the loop function runs over and over again forever
 void loop() {
   sensorValue = digitalRead(sensorPin);
+  Serial.print(sensorValue);
 
-  if (!client.connect(host, httpPort)) { //print if connection is failed
-    Serial.println("connection failed");
+  if (!client.connect(host, httpPort)) {
+    Serial.println("connection failed!!");
     return;
   }
+
 
   getNetworkData();
 
   delay(2000);
 
   sendNetworkData();
-
 }
 
+void reset(){
+    digitalWrite(redLedPin, LOW);
+    digitalWrite(orangeLedPin, LOW);
+    digitalWrite(greenLedPin, LOW);
+}
 
 void getNetworkData() {
   client.print(String("GET ") + getPath + " HTTP/1.1\r\n" +
@@ -83,17 +86,17 @@ void getNetworkData() {
   String section = "header";
   while (client.available()) {
     String line = client.readStringUntil('\r');
-    Serial.print(line);
-    if (section == "header") {
-      Serial.print(".");
-      if (line == "\n") {
+    //    Serial.print(line);
+    // we’ll parse the HTML body here
+    if (section == "header") { // headers..
+      //Serial.print(".");
+      if (line == "\n") { // skips the empty space at the beginning
         section = "json";
       }
     }
-    else if (section == "json") { // if it' json
+    else if (section == "json") {  // if it' json
       section = "ignore";
       String result = line.substring(1);
-
       // Parse JSON
       int size = result.length() + 1;
       char json[size];
@@ -107,36 +110,41 @@ void getNetworkData() {
         Serial.println("parseObject() failed");
         return;
       }
-      if(strcmp(json_parsed["alarm"], "true") == 0){
-         digitalWrite(soundPin, HIGH);
+
+      if (strcmp(json_parsed["alarm"], "true") == 0) {
+        digitalWrite(soundPin, HIGH);
+      }
+       if (strcmp(json_parsed["alarm"], "false") == 0) {
+        digitalWrite(soundPin, LOW);
       }
 
       // Make the decision to turn off or on the LED
-      if (strcmp(json_parsed["status"], "open") == 0) {
+      if (strcmp(json_parsed["redLed"], "true") == 0) {
+        reset();
+        digitalWrite(redLedPin, HIGH);
+
+      }
+      if (strcmp(json_parsed["orangeLed"], "true") == 0) {
+        reset();
+        digitalWrite(orangeLedPin, HIGH);
+
+      }
+      if (strcmp(json_parsed["greenLed"], "true") == 0) {
+        reset();
         digitalWrite(greenLedPin, HIGH);
 
       }
-      else if (strcmp(json_parsed["status"], "longopen") == 0) {
-        digitalWrite(orangeLedPin, HIGH);
-      }
-      else if (strcmp(json_parsed["status"], "warning") == 0) {
-        digitalWrite(redLedPin, HIGH);
-      }
-      else {
-        digitalWrite(greenLedPin, LOW);
-      }
+
     }
   }
   Serial.println("closing connection. ");
 }
-
 
 void sendNetworkData() {
 
   if (client.connect(host, httpPort)) {
     String postStr = "doorStatus=";
     postStr += String(sensorValue);
-
 
     client.println("POST /api HTTP/1.1");
     client.println("Host: " + String(host));
@@ -151,4 +159,3 @@ void sendNetworkData() {
 
   }
 }
-
