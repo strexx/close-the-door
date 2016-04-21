@@ -1,0 +1,53 @@
+/*typografie styling*/
+
+html {
+    font-size: 1.1em;
+}
+body {
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4 {
+    margin: 1.414em 0 0.5em;
+    font-weight: inherit;
+    line-height: 1.2;
+}
+h1 {
+    margin: 0;
+    font-size: 3.157em;
+    font-weight: 700;
+}
+h2 {
+    font-size: 1.8em;
+    font-weight: 400;
+}
+h3 {
+    font-size: 1.777em;
+    color: rgb(66, 66, 66);
+    font-weight: normal;
+}
+h4 {
+    font-size: 1.333em;
+    font-weight: 200;
+}
+p {
+    font-size: 1em;
+    font-weight: 300;
+    color: rgb(66, 66, 66);
+    letter-spacing: normal;
+    line-height: 1.5em;
+}
+small {
+    font-size: 0.707em;
+    font-weight: 100;
+}
+span {
+    font-size: 0.707em;
+    font-weight: 300;
+}
+a {
+    font-size: 1em;
+    font-weight: 100;
+}

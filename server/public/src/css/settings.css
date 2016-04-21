@@ -1,0 +1,33 @@
+.settings section {
+    position: absolute;
+    top: 12em;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+}
+.settings header {
+    background: #fff;
+}
+.settings .slider {
+    height: 17em;
+    background: url(/img/background.jpeg) no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+button {
+    background-color: #7AC17B;
+    color: #fff;
+    border: none;
+    padding: 1em 2em;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12)
+}
+button:hover {
+    color: #fff;
+    background-color: #73b574;
+}

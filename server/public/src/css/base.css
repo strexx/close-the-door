@@ -7,13 +7,24 @@ main {
     min-width: 13em;
     margin: 0 auto 0 auto;
 }
-
 ul > li {
     list-style-type: none;
     display: inline-block;
 }
-
-.none,
-.disabled {
+.none, .disabled {
     display: none !important;
+}
+.resposive {
+    padding: 1em;
+    max-width: 40em;
+    margin: 1em auto;
+}
+.shadow {
+    box-shadow: 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12), 0 2px 4px -1px rgba(0, 0, 0, .2);
+    background-color: rgb(255, 255, 255);
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    padding: 3em;
 }

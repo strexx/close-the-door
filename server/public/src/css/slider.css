@@ -1,6 +1,6 @@
 .slider {
     display: flex;
-    height: 40vh;
+    height: 20em;
     text-align: center;
     background: #fff;
     background: url(/img/background.jpeg) no-repeat center center fixed;
