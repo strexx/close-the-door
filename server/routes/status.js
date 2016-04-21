@@ -31,11 +31,9 @@ router.post('/', function(req, res, next) {
                 doorStatus: doorStatus,
                 status: "costum",
                 alarm: req.body.alarm,
-                leds: {
-                    red: req.body.redLed,
-                    orange: req.body.orangeLed,
-                    green: req.body.greenLed
-                }
+                redLed: req.body.redLed,
+                orangeLed: req.body.orangeLed,
+                greenLed: req.body.greenLed
             };
 
             console.log(getObject.last(historyData).doorStatus);

@@ -37,7 +37,8 @@ gulp.task('styles', function(cb) {
             './public/src/css/slider.css',
             './public/src/css/status.css',
             './public/src/css/forms.css',
-            './public/src/css/settings.css'
+            './public/src/css/settings.css',
+            './public/src/css/footer.css'
         ])
         .pipe(concat('style.css'))
         .pipe(postcss(processors))

@@ -40,26 +40,24 @@ router.get('/status/leds', function(req, res) {
                         doorStatus: doorStatus,
                         status: "",
                         alarm: false,
-                        leds: {
-                            red: false,
-                            orange: false,
-                            green: false
-                        }
+                        redLed: false,
+                        orangeLed: false,
+                        greenLed: false
                     };
 
                 if (minutes >= JSON.parse(settings.warnings.first) && doorStatus === 1) {
                     newData.status = "warning";
                     newData.alarm = true;
-                    newData.leds.red = true;
+                    newData.redLed= true;
                 } else if (minutes >= JSON.parse(settings.warnings.second) && doorStatus === 1) {
                     newData.status = "longopen";
-                    newData.leds.orange = true;
+                    newData.orangeLed = true;
                 } else if (minutes >= 0 && doorStatus === 1) {
                     newData.status = "open";
-                    newData.leds.orange = true;
+                    newData.greenLed = true;
                 } else {
                     newData.status = "closed";
-                    newData.leds.green = true;
+                    newData.greenLed = true;
                 }
 
                 if (lastObject.status === "costum") {
@@ -73,8 +71,8 @@ router.get('/status/leds', function(req, res) {
                 }
 
                 function saveData() {
-                  historyData.push(newData);
-                  jsonfile.writeFileSync(historyPath, historyData);
+                    historyData.push(newData);
+                    jsonfile.writeFileSync(historyPath, historyData);
                 }
             });
         });

@@ -18,7 +18,11 @@ router.get('/', function(req, res, next) {
                     description: 'A stop behind closing the door',
                     door: JSON.parse(getObject.last(data).doorStatus),
                     timeAgo: moment(getObject.last(data).time).fromNow(),
-                    data: getObject.last(historyData).leds,
+                    data: {
+                        red: getObject.last(historyData).redLed,
+                        orange: getObject.last(historyData).orangeLed,
+                        green: getObject.last(historyData).greenLed
+                    },
                     status: getObject.last(historyData).status
                 });
             } else if (err) {
