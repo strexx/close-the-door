@@ -1,43 +1,52 @@
-<h1>Settings</h1>
-<p>
-  You can setup the settings of the app.
-</p>
+<section class="settings">
+    <div class="slider">
 
-<form action="/settings" method="post">
-    <div>
-        <label for="firstwarning">Time before first warning</label>
-        <select id="firstwarning" name="firstwarning">
-            <option value="0.5">0.5 minutes</option>
-            <option value="1">1 minutes</option>
-            <option value="2">2 minutes</option>
-            <option value="3">3 minutes</option>
-            <option value="4">4 minutes</option>
-            <option value="5">5 minutes</option>
-            <option value="10">10 minutes</option>
-        </select>
-    </div>
-    <div>
-        <label for="secondwarning">Time before second warning</label>
-        <select id="secondwarning" name="secondwarning">
-            <option value="1">1 minutes</option>
-            <option value="2">2 minutes</option>
-            <option value="3">3 minutes</option>
-            <option value="4">4 minutes</option>
-            <option value="5">5 minutes</option>
-            <option value="10">10 minutes</option>
-            <option value="10">10 minutes</option>
-        </select>
-    </div>
-    <div>
-        <label for="starttime">Start alarm time</label>
-        <input id="starttime" type="time" name="startTime" placeholder="HH:MM">
-    </div>
-    <div>
-        <label for="endtime">End alarm time</label>
-        <input id="endtime" type="time" name="endTime" placeholder="HH:MM">
     </div>
 
-    <button type="submit">
-        save
-    </button>
-</form>
+    <section class="shadow resposive">
+      <header>
+        <h1>Settings</h1>
+      <p>
+        Over here you can setup when the alarm wil go of and when you will got your first warning.
+      </p>
+      </header>
+        <form action="/settings" method="post">
+            <div>
+                <label for="firstwarning">Time before first warning</label>
+                <select id="firstwarning" name="firstwarning">
+                    <option value="0.5">0.5 minutes</option>
+                    <option value="1">1 minutes</option>
+                    <option value="2">2 minutes</option>
+                    <option value="3">3 minutes</option>
+                    <option value="4">4 minutes</option>
+                    <option value="5">5 minutes</option>
+                    <option value="10">10 minutes</option>
+                </select>
+            </div>
+            <div>
+                <label for="secondwarning">Time before second warning</label>
+                <select id="secondwarning" name="secondwarning">
+                    <option value="1">1 minutes</option>
+                    <option value="2">2 minutes</option>
+                    <option value="3">3 minutes</option>
+                    <option value="4">4 minutes</option>
+                    <option value="5">5 minutes</option>
+                    <option value="10">10 minutes</option>
+                    <option value="10">10 minutes</option>
+                </select>
+            </div>
+            <div>
+                <label for="starttime">Start alarm time</label>
+                <input id="starttime" type="time" name="startTime" placeholder="HH:MM">
+            </div>
+            <div>
+                <label for="endtime">End alarm time</label>
+                <input id="endtime" type="time" name="endTime" placeholder="HH:MM">
+            </div>
+
+            <button type="submit">
+                save
+            </button>
+        </form>
+    </section>
+</section>

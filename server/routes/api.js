@@ -19,7 +19,9 @@ router.post('/', function(req, res) {
                 time: now,
                 doorStatus: req.body.doorStatus || lastObject.doorStatus
             };
-        data.push(newdata);
+        if (getObject.last(data).doorStatus != req.body.doorStatus) {
+            data.push(newdata);
+        }
         jsonfile.writeFileSync(dataPath, data);
         res.redirect('/history');
     });
@@ -29,21 +31,25 @@ router.get('/status/leds', function(req, res) {
     jsonfile.readFile(dataPath, function(err, data) {
         jsonfile.readFile(historyPath, function(err, historyData) {
             jsonfile.readFile(settingsPath, function(err, settings) {
-                var now = moment().format('YYYY-MM-DD HH:mm:ss');
-                var minutes = time.difference(data),
+                var now = moment().format('YYYY-MM-DD HH:mm:ss'),
+                    minutes = time.difference(data),
+                    lastObject = getObject.last(historyData),
                     doorStatus = JSON.parse(getObject.last(data).doorStatus),
                     newData = {
                         time: now,
                         doorStatus: doorStatus,
                         status: "",
+                        alarm: false,
                         leds: {
                             red: false,
                             orange: false,
                             green: false
                         }
                     };
+
                 if (minutes >= JSON.parse(settings.warnings.first) && doorStatus === 1) {
                     newData.status = "warning";
+                    newData.alarm = true;
                     newData.leds.red = true;
                 } else if (minutes >= JSON.parse(settings.warnings.second) && doorStatus === 1) {
                     newData.status = "longopen";
@@ -55,13 +61,21 @@ router.get('/status/leds', function(req, res) {
                     newData.status = "closed";
                     newData.leds.green = true;
                 }
-                if (getObject.last(historyData).doorStatus !== newData.doorStatus) {
-                    historyData.push(newData);
-                    jsonfile.writeFileSync(historyPath, historyData);
 
+                if (lastObject.status === "costum") {
+                    res.send(JSON.stringify(lastObject));
+                    saveData();
+                } else if (lastObject.status !== newData.status) {
+                    res.send(JSON.stringify(newData));
+                    saveData();
+                } else {
+                    res.send(JSON.stringify(newData));
                 }
 
-                res.send(JSON.stringify(newData));
+                function saveData() {
+                  historyData.push(newData);
+                  jsonfile.writeFileSync(historyPath, historyData);
+                }
             });
         });
     });

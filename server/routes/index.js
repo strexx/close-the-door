@@ -21,7 +21,6 @@ router.get('/', function(req, res, next) {
                     data: getObject.last(historyData).leds,
                     status: getObject.last(historyData).status
                 });
-
             } else if (err) {
                 res.status(404);
                 next();
