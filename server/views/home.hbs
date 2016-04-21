@@ -5,7 +5,7 @@
     </section>
 </section>
 <section class="doorstatus {{status}}">
-    <section>
+    <section class="resposive">
       {{data.green}}
         {{#if data.red}}
             <h2>Warning your door is open!</h2>
@@ -21,4 +21,13 @@
 
         {{/if}}
     </section>
+</section>
+<section class="resposive">
+  <header>
+    <h1>History</h1>
+  <p>
+    This is a graph of the last 20 changes from the door.
+  </p>
+  </header>
+  <div id="chart"></div>
 </section>

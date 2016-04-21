@@ -7,7 +7,6 @@ var express = require('express'),
     api = require('./routes/api'),
     routes = require('./routes/index'),
     status = require('./routes/status'),
-    history = require('./routes/history'),
     settings = require('./routes/settings');
 
 //set vieuw enging
@@ -27,7 +26,6 @@ app.use('/', routes);
 app.use('/api', api);
 app.use('/status', status);
 app.use('/settings', settings);
-app.use('/history', history);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
