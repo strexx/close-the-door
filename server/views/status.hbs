@@ -1,0 +1,48 @@
+<section class="settings">
+    <div class="slider">
+
+    </div>
+
+    <section class="shadow resposive">
+      <header>
+        <h1>Status</h1>
+      <p>
+        The status of the leds.
+      </p>
+      </header>
+        <form action="/status" method="post">
+          <div>
+              <label for="greenLed">Green led </label>
+              <select id="greenLed" name="greenLed">
+                  <option value="true">on</option>
+                  <option value="false">off</option>
+              </select>
+          </div>
+          <div>
+              <label for="orangeLed">Orange led </label>
+              <select id="orangeLed" name="orangeLed">
+                  <option value="true">on</option>
+                  <option value="false">off</option>
+              </select>
+          </div>
+          <div>
+              <label for="redLed">red led </label>
+              <select id="redLed" name="redLed">
+                  <option value="true">on</option>
+                  <option value="false">off</option>
+              </select>
+          </div>
+          <div>
+              <label for="alarm">Alarm</label>
+              <select id="alarm" name="alarm">
+                  <option value="true">on</option>
+                  <option value="false">off</option>
+              </select>
+          </div>
+
+            <button type="submit">
+                save
+            </button>
+        </form>
+    </section>
+</section>

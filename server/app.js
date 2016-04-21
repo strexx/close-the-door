@@ -6,6 +6,7 @@ var express = require('express'),
     //create routes
     api = require('./routes/api'),
     routes = require('./routes/index'),
+    status = require('./routes/status'),
     history = require('./routes/history'),
     settings = require('./routes/settings');
 
@@ -24,6 +25,7 @@ app.use(express.static(path.join(__dirname, 'public/dist')));
 //use routes
 app.use('/', routes);
 app.use('/api', api);
+app.use('/status', status);
 app.use('/settings', settings);
 app.use('/history', history);
 
