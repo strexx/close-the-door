@@ -10,6 +10,7 @@ var fs = require('fs'),
 var doorstatusPath = './resources/doorstatus.json';
 var settingsPath = './resources/settings.json';
 var dataPath = './resources/data.json';
+var costumData = 0;
 
 router.post('/', function(req, res) {
     var now = moment().format('YYYY-MM-DD HH:mm:ss');
@@ -36,28 +37,25 @@ router.get('/status', function(req, res) {
                 });
             });
         } else {
-            res.send(JSON.stringify(data));
-            jsonfile.writeFileSync(dataPath, '');
+            res.send(data);
+            costumData++;
+            if (costumData === 2) {
+                costumData = 0;
+                jsonfile.writeFileSync(dataPath, '');
+            }
         }
     });
 });
 
-// router.get('/status/alarm', function(req, res) {
-//     jsonfile.readFile(doorstatusPath, function(err, data) {
-//
-//         var minutes = time.difference(data);
-//         var doorStatus = getObject.last(data).doorStatus
-//         if (minutes >= 5 && doorStatus === 1) {
-//             res.send('{"alarm":"true"}');
-//         } else {
-//             res.send('{"alarm":"false"}');
-//         }
-//     });
-// });
-
 router.get('/data/', function(req, res) {
     jsonfile.readFile(doorstatusPath, function(err, data) {
-        res.send(data);
+        if (data.length >= 15) {
+            data.reverse().length = 15;
+            res.send(data.reverse());
+        } else {
+            res.send(data);
+        }
+
     });
 });
 
