@@ -1,6 +1,9 @@
 # How to create a alarm if the door is open?
 If the door stays open the alarm will go on. If the door is closed the alarm will be turned off.
 
+## Live URL
+[Zie live](http://iot.dolstra.me)
+
 ## Code
 
 ### Install requrements
@@ -15,7 +18,7 @@ If the door stays open the alarm will go on. If the door is closed the alarm wil
 In the server folder you can find the code for the server.
 
 Download:
-https://github.com/mat1th/close-the-door.git
+[github.com/mat1th/close-the-door](https://github.com/mat1th/close-the-door.git)
 
 Go to the project:
 
@@ -119,3 +122,6 @@ If you wan't to change the status of the LED's you can post to [iot.dolstra.me/s
 ```
     greenLed=true&orangeLed=true&redLed=true&alarm=true
 ```
+
+## Made by
+[Matthias Dolstra](https://dolstra.me)
