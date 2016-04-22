@@ -7,6 +7,7 @@ var express = require('express'),
     api = require('./routes/api'),
     routes = require('./routes/index'),
     status = require('./routes/status'),
+    dashboard = require('./routes/dashboard'),
     settings = require('./routes/settings');
 
 //set vieuw enging
@@ -25,6 +26,7 @@ app.use(express.static(path.join(__dirname, 'public/dist')));
 app.use('/', routes);
 app.use('/api', api);
 app.use('/status', status);
+app.use('/dashboard', dashboard);
 app.use('/settings', settings);
 
 // catch 404 and forward to error handler

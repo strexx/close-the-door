@@ -20,7 +20,8 @@
     "hbs": "^4.0.0",
     "jsonfile": "^2.2.3",
     "moment": "^2.13.0",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "request": "^2.72.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.3",

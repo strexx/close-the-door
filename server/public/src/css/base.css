@@ -28,3 +28,8 @@ ul > li {
     border-top-right-radius: 2px;
     padding: 3em;
 }
+
+.card{
+  max-width: 10em;
+  margin; 1em;
+}
