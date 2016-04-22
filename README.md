@@ -67,7 +67,7 @@ const int httpPort      = 80;
 Now your NodeMCU will connect to your WiFi.*  And it will try to get and post to your server. 
 
 ## Code structure NodeMCU
-On top of the app I've defined all the vars and pins. In the void setup I connect all pins and connect to the wifi network. Over here you can see how to connect.  
+On top of the app, I've defined all the vars and pins. In the void setup, I connect all pins and connect to the wifi network. Over here you can see how to connect.  
 
 ```arduino
   WiFi.begin(ssid, password); //start the connection
@@ -78,7 +78,7 @@ On top of the app I've defined all the vars and pins. In the void setup I connec
   }
 ```
 
-In the void loop i read the sensor pin and I fist get the data and then Post the sensor value. In the GET i check every value of the JOSN object. 
+In the void loop, i read the sensor pin and I fist get the data and then Post the sensor value. In the GET, I check every value of the JOSN object. 
 
 ```arduino
    if (strcmp(json_parsed["greenLed"], "true") == 0) {
@@ -86,7 +86,7 @@ In the void loop i read the sensor pin and I fist get the data and then Post the
       }
 ```
 
-In the post I create the headers and send the posstring. 
+In the POST, I create the headers and send the posstring. 
 
 ```arduino
     String postStr = "doorStatus="; // create the post sting 
@@ -144,11 +144,11 @@ npm start
 Now the server will run on your desktop locally. If you would like to access the server from outside you need to install it on a server. Or port forward it in your router. 
 
 ## Status 
-There are several statuses in the app. The first status are that the door is closed. On the home page, you will see a green bar. On the NodeMCU the green Led will be on. 
+There are several statuses in the app. The first status is that the door is closed. On the home page, you will see a green bar. On the NodeMCU, the green Led will be on. 
 
 ![Green satus](readme/green.png)
 
-If your door is open the bar will be bleu. The green Led will be on.
+If your door is open the bar will be blue. The green Led will be on.
 
 ![Green satus](readme/bleu.png)
 
@@ -234,7 +234,7 @@ If you want to change the status of the LED's you can post to [iot.dolstra.me/st
 
 
 ## Issues
-*If your NodeMCU won't connect please try an other network or disable the password from the network.  
+*If your NodeMCU won't connect please try another network or disable the password from the network.  
 
 ## Made by
 [Matthias Dolstra](https://dolstra.me)
