@@ -62,7 +62,7 @@ const int httpPort      = 80;
 
 - Upload the code to your NodeMCU with the button on the top of the app.
 
-![screenshot of the adruino IDE](readme/ardriono.png)
+![screenshot of the adruino IDE](readme/ardriono.jpg)
 
 Now your NodeMCU will connect to your WiFi.*  And it will try to get and post to your server. 
 
@@ -146,19 +146,21 @@ Now the server will run on your desktop locally. If you would like to access the
 ## Status 
 There are several statuses in the app. The first status is that the door is closed. On the home page, you will see a green bar. On the NodeMCU, the green Led will be on. 
 
-![Green satus](readme/green.png)
+![Green satus](readme/green.jpg)
 
 If your door is open the bar will be blue. The green Led will be on.
 
-![Green satus](readme/bleu.png)
+![Green satus](readme/bleu.jpg)
+
 
 When the door is open for X min the led will be orange, so will the layout also be. 
 
-![Green satus](readme/orange.png)
+![Green satus](readme/orange.jpg)
+![setup](readme/led_on.jpg)
 
 If the door is open for x time the red LED will turn on and the alarm will go on. When you close the door the page will be green again.
 
-![Green satus](readme/red.png)
+![Green satus](readme/red.jpg)
 
 ## Code structure server
 In the ```app.js``` file you can find the start file from the app. for every route is a file in the  ```routes/file.js```. If there is a post request to the server it will store the data in the  ```resources/doorStatus.js```.
