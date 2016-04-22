@@ -15,7 +15,12 @@ router.get('/', function(req, res, next) {
     jsonfile.readFile(dataPath, function(err, data) {
         jsonfile.readFile(settingsPath, function(err, settings) {
           //render the home page with the data
+          var closed = false;
             if (data != undefined || data != null) {
+                if(JSON.parse(getObject.last(data).doorStatus) === 0){
+                  closed === true;
+                }
+
                 res.render('home', {
                     title: 'Home',
                     description: 'A stop behind closing the door',
@@ -24,7 +29,8 @@ router.get('/', function(req, res, next) {
                     data: {
                         red: getStatus(data, settings).redLed,
                         orange: getStatus(data, settings).orangeLed,
-                        green: getStatus(data, settings).greenLed
+                        green: getStatus(data, settings).greenLed,
+                        closed: closed
                     },
                     status: getStatus(data, settings).status
                 });

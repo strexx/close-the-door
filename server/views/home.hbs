@@ -16,7 +16,11 @@
             <small>Opend {{timeAgo}}</small>
         {{/if}}
         {{#if data.green}}
-            <h2>Your door is closed</h2>
+            <h2>Your door is open</h2>
+            <small>Opend {{timeAgo}}</small>
+        {{/if}}
+        {{#if data.closed}}
+            <h2>Your door is open</h2>
             <small>Closed {{timeAgo}}</small>
         {{/if}}
     </section>
