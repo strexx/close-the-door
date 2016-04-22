@@ -1,33 +1,33 @@
-# How to create a alarm that will go of if the door stays open?
-If the door stay's open in the winter it will be cold in the house. In this tutorial I will explane how I create a alarm that will go off if the door is open for to long ago. 
+# How to create an alarm that will go off if the door stays open?
+If the door stay's open in the winter it will be cold in the house. In this tutorial, I will explain how I create an alarm that will go off if the door is open for to long. 
 
 ## Hardware
 
-### Requrements
-For this project you need some stuf. Overhere is a list of thing I've uses for this project.
+### Requirements
+For this project, you need some stuff. Over here is a list of thing I've used for this project.
 
 - 1 NodeMCU (with WiFi)
 - 1 green led
 - 1 red led
 - 1 breadboard
-- A amount of wires 
-- Piezo-zoemer
+- An amount of wires 
+- Piezo-zoomer
 - Magnet sensor
-- USB to Micro-USB B cable (to connect NodeMCU to pc)
+- USB to Micro-USB B cable (to connect NodeMCU to PC)
 
 ### connecting 
-Over here you can see a sheme how to connect the NodeMCU to the senors and the LED's. Connect them on this way. 
+Over here you can see a scheme how to connect the NodeMCU to the senors and the leds. Connect them on this way. 
 
 ![setup](readme/sheme.JPG)
 Picture of my sheme
 
 | Sensor/Output  | Port         | 
 | ------------- |:-------------:| 
-| green led     | D0 			  | 
-| orange led    | D1			  | 
-| red led       | D2 			  | 
-| Piezo-zoemer  | D3 			  | 
-| sensor        | D4 			  | 
+| green led     | D0               | 
+| orange led    | D1              | 
+| red led       | D2               | 
+| Piezo-zoemer  | D3               | 
+| sensor        | D4               | 
 
 ![setup](readme/setup.JPG)
 Picture of my setup 
@@ -39,11 +39,11 @@ Picture of my setup
 - [ESP8266WiFi lib](https://github.com/ekstrand/ESP8266wifi)
 
 ### Set up
-When you have connected all the wires you can connect the NodeMCU to your PC. Before we can upload our code you need to download [ArduinoJson](https://github.com/bblanchon/ArduinoJson) and [ESP8266WiFi](https://github.com/ekstrand/ESP8266wifi) libary's. And place them in the ```arduino/libarys``` folder. Now the Arduino IDE can use them.
+When you have connected all the wires you can connect the NodeMCU to your PC. Before we can upload our code you need to download [ArduinoJson](https://github.com/bblanchon/ArduinoJson) and [ESP8266WiFi](https://github.com/ekstrand/ESP8266wifi) libarys. And place them in the ```arduino/libarys``` folder. Now the Arduino IDE can use them.
 
 ### Open app
 - Open the Arduino app (You can download it here [Arduino](http://arduino.com)).  
-- Open ```/arduino/projects/closethedoor/closethedoor.ino``` file from the this repository.
+- Open ```/arduino/projects/closethedoor/closethedoor.ino``` file from  this repository.
 - Change the WiFi settings. 
 
 ```
@@ -69,14 +69,14 @@ Now your NodeMCU will connect to your WiFi.*  And it will try to get and post to
 
 ## Installation server 
 
-## Software Requrements 
+## Software Requirements 
 - Nodejs
 - gulp global installed
 - npm global installed
 
 
 ## Download and setup
-In the server folder you can find the code for the server.
+In the server folder, you can find the code for the server.
 
 Download:
 [github.com/mat1th/close-the-door/archive/master.zip](https://github.com/mat1th/close-the-door/archive/master.zip)
@@ -114,8 +114,24 @@ Start the app:
 ```bash
 npm start
 ```
-Now the server will run on your desktop localy. If you would like to acces the server from oudsite you need to install it on a server. Or port forwart it in your router. 
+Now the server will run on your desktop locally. If you would like to access the server from outside you need to install it on a server. Or port forward it in your router. 
 
+## Status 
+There are several statuses in the app. The first status are that the door is closed. On the home page, you will see a green bar. On the NodeMCU the green Led will be on. 
+
+![Green satus](readme/green.png)
+
+If your door is open the bar will be bleu. The green Led will be on.
+
+![Green satus](readme/bleu.png)
+
+When the door is open for X min the led will be orange, so will the layout also be. 
+
+![Green satus](readme/orange.png)
+
+If the door is open for x time the red LED will turn on and the alarm will go on. When you close the door the page will be green again.
+
+![Green satus](readme/red.png)
 
 ## Code structure
 In the ```app.js``` file you can find the start file from the app. for every route is a file in the  ```routes/file.js```. If there is a post request to the server it will store the data in the  ```resources/doorStatus.js```.
@@ -150,7 +166,7 @@ In the ```app.js``` file you can find the start file from the app. for every rou
 
 
 ## API
-My app has a API where you can get the realtime data.
+My app has an API where you can get the realtime data.
 
 ### Current status
 You can get the last status from my sensor from [iot.dolstra.me/api/status](http://iot.dolstra.me/api/status/). You will get the status of the LED's, alarm and the status of the door.
@@ -168,7 +184,7 @@ You can get the last status from my sensor from [iot.dolstra.me/api/status](http
 ```
 
 ### History
-You can also get the history data from [iot.dolstra.me/api/data](http://iot.dolstra.me/api/data). You will get a array with the time and door status.
+You can also get the history data from [iot.dolstra.me/api/data](http://iot.dolstra.me/api/data). You will get an array with the time and door status.
 
 ```json
     [{
@@ -178,7 +194,7 @@ You can also get the history data from [iot.dolstra.me/api/data](http://iot.dols
 ```
 
 ### Post a status for the LED's
-If you wan't to change the status of the LED's you can post to [iot.dolstra.me/status](http://iot.dolstra.me/status). The post sting must be:
+If you want to change the status of the LED's you can post to [iot.dolstra.me/status](http://iot.dolstra.me/status). The post sting must be:
 
 ```
     greenLed=true&orangeLed=true&redLed=true&alarm=true
@@ -187,11 +203,11 @@ If you wan't to change the status of the LED's you can post to [iot.dolstra.me/s
 
 
 ## Live URL
-[Zie live](http://iot.dolstra.me
+[Zie live](http://iot.dolstra.me)
 
 
 ## Issues
-*If your NodeMCU won't connect please try a other network or disable the password from the network.  
+*If your NodeMCU won't connect please try an other network or disable the password from the network.  
 
 ## Made by
 [Matthias Dolstra](https://dolstra.me)
