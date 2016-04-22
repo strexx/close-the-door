@@ -23,11 +23,11 @@ Picture of my sheme
 
 | Sensor/Output  | Port         | 
 | ------------- |:-------------:| 
-| green led     | D0               | 
-| orange led    | D1              | 
-| red led       | D2               | 
-| Piezo-zoemer  | D3               | 
-| sensor        | D4               | 
+| green led     | D0            | 
+| orange led    | D1            | 
+| red led       | D2            | 
+| Piezo-zoemer  | D3            | 
+| sensor        | D4            | 
 
 ![setup](readme/setup.JPG)
 Picture of my setup 
@@ -66,16 +66,43 @@ const int httpPort      = 80;
 
 Now your NodeMCU will connect to your WiFi.*  And it will try to get and post to your server. 
 
+## Code structure NodeMCU
+On top of the app I've defined all the vars and pins. In the void setup I connect all pins and connect to the wifi network. Over here you can see how to connect.  
+
+```arduino
+  WiFi.begin(ssid, password); //start the connection
+  int wifi_ctr = 0;
+  while (WiFi.status() != WL_CONNECTED) { //while connection print a dot
+    delay(500);
+    Serial.print(".");
+  }
+```
+
+In the void loop i read the sensor pin and I fist get the data and then Post the sensor value. In the GET i check every value of the JOSN object. 
+
+```arduino
+   if (strcmp(json_parsed["greenLed"], "true") == 0) {
+        digitalWrite(greenLedPin, HIGH);
+      }
+```
+
+In the post I create the headers and send the posstring. 
+
+```arduino
+    String postStr = "doorStatus="; // create the post sting 
+    postStr += String(sensorValue);
+```
+
 
 ## Installation server 
 
-## Software Requirements 
+### Software Requirements 
 - Nodejs
 - gulp global installed
 - npm global installed
 
 
-## Download and setup
+### Download and setup
 In the server folder, you can find the code for the server.
 
 Download:
@@ -93,7 +120,7 @@ Install node modules:
 npm install
 ```
 
-## Building
+### Building
 
 Install Gulp:
 
@@ -107,7 +134,7 @@ Start Gulp:
 gulp
 ```
 
-## Starting the app
+### Starting the app
 
 Start the app:
 
@@ -133,7 +160,7 @@ If the door is open for x time the red LED will turn on and the alarm will go on
 
 ![Green satus](readme/red.png)
 
-## Code structure
+## Code structure server
 In the ```app.js``` file you can find the start file from the app. for every route is a file in the  ```routes/file.js```. If there is a post request to the server it will store the data in the  ```resources/doorStatus.js```.
 
 ```
