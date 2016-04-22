@@ -1,5 +1,5 @@
 # How to create an alarm that will go off if the door stays open?
-If the door stay's open in the winter it will be cold in the house. In this tutorial, I will explain how I create an alarm that will go off if the door is open for to long. 
+If the door stay's open in the winter it will be cold in the house. In this tutorial, I will explain how I create an alarm that will go off if the door is open for too long. The alarm has 3 phases. The first phase there is nothing wrong. The second an orange led will turn on and the third phase where a red led will turn on with an alarm. On the server, you can configure how long each phase should be. 
 
 ## Hardware
 
