@@ -97,7 +97,7 @@ void getNetworkData() {
 
     //get every line form response if connection is open
     String line = client.readStringUntil('\r');
-
+    // insprired http://blog.nyl.io/esp8266-led-arduino/
     // parse the json
     if (section == "header") { // headers..
       if (line == "\n") { // skip the enter
