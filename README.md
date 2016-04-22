@@ -1,30 +1,92 @@
-# How to create a alarm if the door is open?
-If the door stays open the alarm will go on. If the door is closed the alarm will be turned off.
+# How to create a alarm that will go of if the door stays open?
+If the door stay's open in the winter it will be cold in the house. In this tutorial I will explane how I create a alarm that will go off if the door is open for to long ago. 
 
-## Live URL
-[Zie live](http://iot.dolstra.me)
+## Hardware
 
-## Code
+### Requrements
+For this project you need some stuf. Overhere is a list of thing I've uses for this project.
 
-### Install requrements
-- nodejs
-- gulp global installed
-- npm installed
+- 1 NodeMCU (with WiFi)
+- 1 green led
+- 1 red led
+- 1 breadboard
+- A amount of wires 
+- Piezo-zoemer
+- Magnet sensor
+- USB to Micro-USB B cable (to connect NodeMCU to pc)
+
+### connecting 
+Over here you can see a sheme how to connect the NodeMCU to the senors and the LED's. Connect them on this way. 
+
+![setup](readme/sheme.JPG)
+Picture of my sheme
+
+| Sensor/Output  | Port         | 
+| ------------- |:-------------:| 
+| green led     | D0 			  | 
+| orange led    | D1			  | 
+| red led       | D2 			  | 
+| Piezo-zoemer  | D3 			  | 
+| sensor        | D4 			  | 
+
+![setup](readme/setup.JPG)
+Picture of my setup 
+
+## Installing NodeMCU
+### Software Requrements 
 - Arduino app
-- [ArduinoJson](https://github.com/bblanchon/ArduinoJson) lib
-- [ESP8266WiFi](https://github.com/ekstrand/ESP8266wifi) lib
+- [ArduinoJson lib](https://github.com/bblanchon/ArduinoJson)
+- [ESP8266WiFi lib](https://github.com/ekstrand/ESP8266wifi)
 
-## Installation server
+### Set up
+When you have connected all the wires you can connect the NodeMCU to your PC. Before we can upload our code you need to download [ArduinoJson](https://github.com/bblanchon/ArduinoJson) and [ESP8266WiFi](https://github.com/ekstrand/ESP8266wifi) libary's. And place them in the ```arduino/libarys``` folder. Now the Arduino IDE can use them.
+
+### Open app
+- Open the Arduino app (You can download it here [Arduino](http://arduino.com)).  
+- Open ```/arduino/projects/closethedoor/closethedoor.ino``` file from the this repository.
+- Change the WiFi settings. 
+
+```
+const char* ssid     = "XXX";
+const char* password = "XXX;
+```
+
+- Change the path to  where you will host your website. 
+
+```
+const char* host        = "iot.dolstra.me"; // Your domain
+String getPath          = "/api/status";
+String postPath         = "/api";
+const int httpPort      = 80;
+```
+
+- Upload the code to your NodeMCU with the button on the top of the app.
+
+![screenshot of the adruino IDE](readme/ardriono.png)
+
+Now your NodeMCU will connect to your WiFi.*  And it will try to get and post to your server. 
+
+
+## Installation server 
+
+## Software Requrements 
+- Nodejs
+- gulp global installed
+- npm global installed
+
+
+## Download and setup
 In the server folder you can find the code for the server.
 
 Download:
-[github.com/mat1th/close-the-door](https://github.com/mat1th/close-the-door.git)
+[github.com/mat1th/close-the-door/archive/master.zip](https://github.com/mat1th/close-the-door/archive/master.zip)
 
 Go to the project:
 
 ```bash
 cd path/to/files
 ```
+
 Install node modules:
 
 ```bash
@@ -48,9 +110,12 @@ gulp
 ## Starting the app
 
 Start the app:
+
 ```bash
 npm start
 ```
+Now the server will run on your desktop localy. If you would like to acces the server from oudsite you need to install it on a server. Or port forwart it in your router. 
+
 
 ## Code structure
 In the ```app.js``` file you can find the start file from the app. for every route is a file in the  ```routes/file.js```. If there is a post request to the server it will store the data in the  ```resources/doorStatus.js```.
@@ -82,10 +147,6 @@ In the ```app.js``` file you can find the start file from the app. for every rou
   /app.js
 
 ```
-
-## Instalation Arduino
-Open the Arduino app that you can download form the [Arduino](http://arduino.com) website.
-Add the ArduinoJson and ESP8266WiFi libarys to the Arduino app. Then open the ```/arduino/projects/closethedoor/closethedoor.ino``` file. Change the WiFi and the server  settings and upload it to your arduino. Now it will post to your server.
 
 
 ## API
@@ -122,6 +183,15 @@ If you wan't to change the status of the LED's you can post to [iot.dolstra.me/s
 ```
     greenLed=true&orangeLed=true&redLed=true&alarm=true
 ```
+
+
+
+## Live URL
+[Zie live](http://iot.dolstra.me
+
+
+## Issues
+*If your NodeMCU won't connect please try a other network or disable the password from the network.  
 
 ## Made by
 [Matthias Dolstra](https://dolstra.me)
