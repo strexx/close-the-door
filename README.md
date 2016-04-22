@@ -11,8 +11,8 @@ If the door stays open the alarm will go on. If the door is closed the alarm wil
 - gulp global installed
 - npm installed
 - Arduino app
-- ArduinoJson lib
-- ESP8266WiFi lib
+- [ArduinoJson](https://github.com/bblanchon/ArduinoJson) lib
+- [ESP8266WiFi](https://github.com/ekstrand/ESP8266wifi) lib
 
 ## Installation server
 In the server folder you can find the code for the server.
